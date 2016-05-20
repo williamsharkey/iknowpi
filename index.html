@@ -5,20 +5,61 @@
     <title>i know pi</title>
     <style>
         #main, body, html{
-            height: 100%;
+            height: 90%;
             margin:0;
             padding:0;
         }
+        html{
+            background: #9EFF93;
+        }
+        head, title{
+            display: block;
+            text-align: center;
+            font-family: monospace;
+            font-size: 32pt;
+            color: #B092D6;
+            font-variant: small-caps;
+        }
+        html.failed{
+            background: #FF3E69;
+        }
         .correct {
-            color:green;
+            color: #9745FF;
+            background: #A1FFAD;
         }
         .incorrect {
-            color:darkred;
+            color: #FF6D8E;
+            background: antiquewhite;
         }
         #main {
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
+        }
+        #score {
+            border-radius: 50%;
+            background: #B092D6;
+            color: white;
+            width: 2em;
+            height: 2em;
+            text-align: -webkit-center;
+            line-height: 2em;
+            font-family: monospace;
+            font-size: 18pt;
+            position: relative;
+        }
+        #score:before{
+            content: 'score';
+            position: absolute;
+            right: 120%;
+            color: black;
+            font-size: 10px;
+        }
+        #past{
+            font-size:18pt;
+            font-family: monospace;
+            min-height: 4em;
         }
     </style>
 </head>
@@ -26,6 +67,7 @@
     <div id="main">
         <div id="past"></div>
         <div id="current"></div>
+        <div id="score">0</div>
     </div>
 </body>
 <script type="text/javascript" src="iknowpi.js"></script>
