@@ -28,7 +28,10 @@
             visibility: visible;
         }
         .correct {
-            color: #9745FF;
+            color: #B092D6;
+            background: ghostwhite;
+        }
+        .correct td{
             background: #A1FFAD;
         }
         .incorrect {
@@ -47,11 +50,15 @@
             color: white;
             width: 2em;
             height: 2em;
-            text-align: -webkit-center;
             line-height: 2em;
             font-family: monospace;
             font-size: 18pt;
-            position: relative;
+            position: fixed;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            bottom: 0;
+            text-align: center;
         }
         #score:before{
             content: 'score';
@@ -73,12 +80,40 @@
             min-height: 4em;
             color: ghostwhite;
         }
+        table{
+            display: inline-block;
+            border: 1px solid;
+            border-radius: 0.3em;
+            overflow: hidden;
+            padding: 5px;
+            margin: .1em .2em;
+            border-collapse: collapse;
+        }
+        td {
+
+            line-height:0.8em;
+
+            padding: 2px;
+            border: 1px solid darkgrey;
+        }
+        .digit0 .num0,
+        .digit1 .num1,
+        .digit2 .num2,
+        .digit3 .num3,
+        .digit4 .num4,
+        .digit5 .num5,
+        .digit6 .num6,
+        .digit7 .num7,
+        .digit8 .num8,
+        .digit9 .num9 {
+            color: #8484A2;
+            background: #FFFBFB;
+        }
     </style>
 </head>
 <body>
     <div id="main">
         <div id="past"></div>
-        <div id="current"></div>
         <div id="score">0</div>
         <div id="lost">press space to restart</div>
     </div>

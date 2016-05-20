@@ -5,10 +5,20 @@
 var pi = "3.1415926535 8979323846 2643383279 5028841971 6939937510 5820974944 5923078164 0628620899 8628034825 3421170679";
 var htmlEl = document.querySelector('html');
 var audio = new window.AudioContext();
-var currEl = document.querySelector('#current');
 var pastEl = document.querySelector('#past');
 var scoreEl = document.querySelector('#score');
-
+var padHt = '<tr>' +
+        '<td class="num7">7</td> <td class="num8">8</td> <td class="num9">9</td>' +
+    '</tr>' +
+    '<tr>' +
+        '<td  class="num4">4</td> <td class="num5">5</td> <td class="num6">6</td>' +
+    '</tr>' +
+    '<tr>' +
+        '<td class="num1">1</td> <td class="num2">2</td> <td class="num3">3</td>' +
+    '</tr>' +
+    '<tr>' +
+        '<td colspan="2" class="num0">0</td>' +
+    '</tr>';
 var keycodes =  [65,    83,68,70,   71,72,74,       75,76,186];//home row
 var keycodes2 = [48,    49,50,51,   52,53,54,       55,56,57]; //nums
 var keycodes3 = [96,    97,98,99,   100,101,102,    103,104,105]; // numpad
@@ -63,12 +73,13 @@ function play(e){
             htmlEl.classList.add("failed");
         }
 
-        pastEl.innerHTML += "<span class='"+currClass+"'>" +  pi[currPlace] + "</span>" ;
+        //pastEl.innerHTML += "<span class='"+currClass+"'>" +  pi[currPlace] + "</span>" ;
+        pastEl.innerHTML += "<table class='"+currClass+" digit"+pi[currPlace]+"'>" +  padHt + "</table>" ;
 
         currPlace++;
 
         while (pi[currPlace] === '.' || pi[currPlace] === ' ') {
-            pastEl.innerHTML += "<span class='nonNum'>" +  pi[currPlace] + "</span>";
+            //pastEl.innerHTML += "<span class='nonNum'>" +  pi[currPlace] + "</span>";
             currPlace++;
         }
         var freq = root * Math.pow(2,digits[index]/12);
