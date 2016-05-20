@@ -23,6 +23,10 @@
         html.failed{
             background: #FF3E69;
         }
+        html.failed #lost{
+            padding-top:1em;
+            visibility: visible;
+        }
         .correct {
             color: #9745FF;
             background: #A1FFAD;
@@ -61,6 +65,13 @@
             font-family: monospace;
             min-height: 4em;
         }
+        #lost {
+            visibility: hidden;
+            font-size:18pt;
+            font-family: monospace;
+            min-height: 4em;
+            color: ghostwhite;
+        }
     </style>
 </head>
 <body>
@@ -68,6 +79,7 @@
         <div id="past"></div>
         <div id="current"></div>
         <div id="score">0</div>
+        <div id="lost">press space to restart</div>
     </div>
 </body>
 <script type="text/javascript" src="iknowpi.js"></script>
