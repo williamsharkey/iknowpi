@@ -3,10 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>i know pi</title>
+    <style>
+        #main, body, html{
+            height: 100%;
+            margin:0;
+            padding:0;
+        }
+        .correct {
+            color:green;
+        }
+        .incorrect {
+            color:darkred;
+        }
+        #main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
 </head>
 <body>
-<div id="past"></div>
-<div id="current"></div>
+    <div id="main">
+        <div id="past"></div>
+        <div id="current"></div>
+    </div>
 </body>
 <script type="text/javascript" src="iknowpi.js"></script>
 </html>

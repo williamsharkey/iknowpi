@@ -8,7 +8,9 @@ var audio = new window.AudioContext();
 var currEl = document.querySelector('#current');
 var pastEl = document.querySelector('#past');
 
-var keycodes = [65,83,68,70,71,72,74,75,76,186];
+var keycodes =  [65,    83,68,70,   71,72,74,       75,76,186];//home row
+var keycodes2 = [48,    49,50,51,   52,53,54,       55,56,57]; //nums
+var keycodes3 = [96,    97,98,99,   100,101,102,    103,104,105]; // numpad
 var keys = "asdfghjkl;";
 var digits = "0123456789";
 
@@ -16,21 +18,34 @@ var root = 200;
 var currPlace = 0;
 function play(e){
     var index = keycodes.indexOf(e.which);
+    var index2 = keycodes2.indexOf(e.which);
+    var index3 = keycodes3.indexOf(e.which);
+    if (index2 > index) {
+        index= index2;
+    }
+    if (index3 > index) {
+        index = index3;
+    }
 
     if (index >= 0) {
-
-        if (digits[index] == pi[currPlace])
-        {
-            pastEl.innerHTML += pi[currPlace];
-            currPlace++;
-            while (pi[currPlace] === '.' || pi[currPlace] === ' ') {
-                pastEl.innerHTML += pi[currPlace];
-                currPlace++;
-            }
-            var freq = root * Math.pow(2,digits[index]/12);
-            createOscillator(freq);
+        var correct = digits[index] == pi[currPlace];
+        var currClass;
+        if (correct) {
+            currClass = 'correct';
+        } else {
+            currClass = 'incorrect';
         }
 
+        pastEl.innerHTML += "<span class='"+currClass+"'>" +  pi[currPlace] + "</span>" ;
+
+        currPlace++;
+
+        while (pi[currPlace] === '.' || pi[currPlace] === ' ') {
+            pastEl.innerHTML += "<span class='nonNum'>" +  pi[currPlace] + "</span>";
+            currPlace++;
+        }
+        var freq = root * Math.pow(2,digits[index]/12);
+        createOscillator(freq);
 
 
         //currEl.innerHTML = digits[index];
