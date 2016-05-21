@@ -38,15 +38,12 @@ function reset() {
     currPlace = 0;
     failed = false;
     htmlEl.classList.remove("failed");
-
 }
 
 function play(e){
     if (e.which == spaceCode) {
         return reset();
     }
-
-
     var index = keycodes.indexOf(e.which);
     var index2 = keycodes2.indexOf(e.which);
     var index3 = keycodes3.indexOf(e.which);
@@ -60,59 +57,73 @@ function play(e){
     if (index >= 0) {
         var correct = digits[index] == pi[currPlace];
         var currClass;
+        var freq = root * Math.pow(2,pi[currPlace]/12);
         if (correct) {
+            playCorrect(freq);
             currClass = 'correct';
             if (!failed){
                 score++;
                 scoreEl.innerHTML = score;
             }
-
         } else {
+            playIncorrect(freq);
             failed = true;
             currClass = 'incorrect';
             htmlEl.classList.add("failed");
         }
 
-        //pastEl.innerHTML += "<span class='"+currClass+"'>" +  pi[currPlace] + "</span>" ;
-        pastEl.innerHTML += "<table class='"+currClass+" digit"+pi[currPlace]+"'>" +  padHt + "</table>" ;
-
+        pastEl.insertAdjacentHTML('beforeend', "<table class='"+currClass+" digit"+pi[currPlace]+"'>" +  padHt + "</table>");
+        pastEl.scrollTop=0;
         currPlace++;
 
         while (pi[currPlace] === '.' || pi[currPlace] === ' ') {
-            //pastEl.innerHTML += "<span class='nonNum'>" +  pi[currPlace] + "</span>";
+
             currPlace++;
         }
-        var freq = root * Math.pow(2,digits[index]/12);
-        createOscillator(freq);
-
-
-        //currEl.innerHTML = digits[index];
-        //pastEl.innerHTML += keys[index];
     } else {
-        //currEl.innerHTML = "";
-        //createOscillator(root/4);
     }
-
 }
-
 var correct = 0;
 
 document.onkeydown = play;
-//    const scale = int(str, 12);
-// const freq = 100 * Math.pow(2, (i - 2) / scale );
 
-function createOscillator(freq) {
-    var attack = 0;
+function playCorrect(freq) {
     var decay = 700;
+    createOscillator(freq, decay);
+}
+
+function playIncorrect(freq) {
+    var decay = 80.0;
+    var offset = 40;
+
+    playAt(freq*4, decay,    offset*0.0);
+    playAt(freq*3, decay,    offset*1.0);
+    playAt(freq*2, decay,    offset*2.0);
+    playAt(freq*1, decay,    offset*3.0);
+    playAt(freq*4, decay,    offset*4.0);
+    playAt(freq*3, decay,    offset*5.0);
+    playAt(freq*2, decay,    offset*6.0);
+    playAt(freq*1, decay,    offset*7.0);
+    playAt(freq*8, decay*5,  offset*8.0);
+}
+
+function playAt(freq, decay, offset) {
+    setTimeout(x, offset);
+    function x(){
+        createOscillator(freq, decay);
+    }
+}
+
+function createOscillator(freq, decay) {
+    var attack = 0;
     var volume = 0.2;
     var gain = audio.createGain();
     var osc = audio.createOscillator();
-
+    var t = audio.currentTime;
     gain.connect(audio.destination);
-    gain.gain.setValueAtTime(0, audio.currentTime);
-    gain.gain.linearRampToValueAtTime(volume, audio.currentTime + attack / 1000);
-    gain.gain.exponentialRampToValueAtTime(volume * 0.01, audio.currentTime + decay / 1000);
-
+    gain.gain.setValueAtTime(0, t);
+    gain.gain.linearRampToValueAtTime(volume, t + attack / 1000);
+    gain.gain.exponentialRampToValueAtTime(volume * 0.01, t + decay / 1000);
     osc.frequency.value = freq;
     osc.type = "square";
     osc.connect(gain);

@@ -5,7 +5,7 @@
     <title>i know pi</title>
     <style>
         #main, body, html{
-            height: 90%;
+            height: calc(100% - 5em);
             margin:0;
             padding:0;
         }
@@ -15,9 +15,9 @@
         head, title{
             display: block;
             text-align: center;
-            font-family: monospace;
-            font-size: 32pt;
-            color: #B092D6;
+            font-family: 'Trebuchet Ms', times;
+            font-size: 64pt;
+            color: black;
             font-variant: small-caps;
         }
         html.failed{
@@ -27,37 +27,23 @@
 
             visibility: visible;
         }
-        .correct {
-            color: #B092D6;
-            background: ghostwhite;
-        }
-        .correct td{
-            background: #A1FFAD;
-        }
-        .incorrect {
-            color: #FF6D8E;
-            background: antiquewhite;
-        }
         #main {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
+            overflow-y: hidden;
         }
         #score {
             border-radius: 50%;
-            background: #B092D6;
+            background: black;
             color: white;
             width: 2em;
             height: 2em;
             line-height: 2em;
             font-family: monospace;
-            font-size: 18pt;
+            font-size: 24pt;
             position: fixed;
             left: 0;
             right: 0;
             margin: 0 auto;
-            bottom: 0;
+            bottom: 10px;
             text-align: center;
         }
         #score:before{
@@ -65,36 +51,52 @@
             position: absolute;
             right: 120%;
             color: black;
-            font-size: 10px;
+            font-size: 14px;
         }
         #past{
             font-size:18pt;
-            font-family: monospace;
-            min-height: 4em;
+            font-family: "Futura",sans-serif;
+            width: 27em;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap-reverse;
+            margin: 0 auto;
         }
         #lost {
-            padding-top:1em;
+            padding-top: 1em;
             visibility: hidden;
-            font-size:18pt;
+            font-size: 18pt;
             font-family: monospace;
-            min-height: 4em;
             color: ghostwhite;
+            text-align: center;
         }
         table{
-            display: inline-block;
-            border: 1px solid;
+            display: block;
+            border: 1px solid #CECECE;
             border-radius: 0.3em;
             overflow: hidden;
             padding: 5px;
-            margin: .1em .2em;
+            margin: .2em;
             border-collapse: collapse;
+
+        }
+        table.correct{
+            background: #E8FFE8;
+        }
+        table.incorrect{
+            background: lightpink;
         }
         td {
-
             line-height:0.8em;
-
+            color:transparent;
             padding: 2px;
-            border: 1px solid darkgrey;
+
+        }
+        .correct td{
+            border: 1px solid #D0D0D0;
+        }
+        .incorrect td {
+            border: 1px solid #ECECEC;
         }
         .digit0 .num0,
         .digit1 .num1,
@@ -106,17 +108,17 @@
         .digit7 .num7,
         .digit8 .num8,
         .digit9 .num9 {
-            color: #8484A2;
-            background: #FFFBFB;
+            color: black;
+            background: white;
         }
     </style>
 </head>
 <body>
     <div id="main">
         <div id="past"></div>
-        <div id="score">0</div>
-        <div id="lost">press space to restart</div>
     </div>
+    <div id="score">0</div>
+    <div id="lost">press space to restart</div>
 </body>
 <script type="text/javascript" src="iknowpi.js"></script>
 </html>
