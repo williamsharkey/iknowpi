@@ -1,17 +1,25 @@
 /**
  * Created by william on 5/19/2016.
+ * Contributions by nooreen on 5/21/2016
  */
 
 var pi = "3.1415926535 8979323846 2643383279 5028841971 6939937510 5820974944 5923078164 0628620899 8628034825 3421170679";
-var htmlEl = document.querySelector('html');
+
+// this is a shortcut so people don't have to type document.querySelector ewww
+function q(selector) {
+    return document.querySelector(selector);
+}
+
+var htmlEl = q('html');
+
 try {
     var audio = new webkitAudioContext();
 }
 catch(err){
     var audio = new AudioContext();
 }
-var pastEl = document.querySelector('#past');
-var scoreEl = document.querySelector('#score');
+var pastEl = q('#past');
+var scoreEl = q('#score');
 var padHt = '<tr>' +
         '<td class="num7">7</td> <td class="num8">8</td> <td class="num9">9</td>' +
     '</tr>' +
@@ -28,6 +36,8 @@ var keycodes =  [65,    83,68,70,   71,72,74,       75,76,186];//home row
 var keycodes2 = [48,    49,50,51,   52,53,54,       55,56,57]; //nums
 var keycodes3 = [96,    97,98,99,   100,101,102,    103,104,105]; // numpad
 var spaceCode = 32;
+var leftArrowCode = 37;
+var rightArrowCode = 39;
 var keys = "asdfghjkl;";
 var digits = "0123456789";
 
@@ -35,25 +45,47 @@ var root = 200;
 var currPlace = 0;
 var score = 0;
 var failed = false;
+var blankCards = 0;
 
 function reset() {
-    score =0;
+    score = 0;
     scoreEl.innerHTML = score;
     pastEl.innerHTML = '';
     currPlace = 0;
+    blankCards = 0;
     failed = false;
     htmlEl.classList.remove("failed");
 }
 
+function insertBlankCard() {
+    blankCards = blankCards + 1;
+    pastEl.insertAdjacentHTML('beforeend', "<table>" +  padHt + "</table>");
+    pastEl.scrollTop = 0;
+}
+
+function removeBlankCardIfExists() {
+    if (blankCards > 0) {
+        q('#past').removeChild(q('#past table:last-child'));
+        blankCards = blankCards - 1;
+    }
+}
+
+
 function play(e){
-    if (e.which == spaceCode) {
+if (e.which == spaceCode) {
         return reset();
+    }
+    if (e.which == rightArrowCode){
+        return insertBlankCard();
+    }
+    if (e.which == leftArrowCode){
+        return removeBlankCardIfExists();
     }
     var index = keycodes.indexOf(e.which);
     var index2 = keycodes2.indexOf(e.which);
     var index3 = keycodes3.indexOf(e.which);
     if (index2 > index) {
-        index= index2;
+        index = index2;
     }
     if (index3 > index) {
         index = index3;
@@ -62,7 +94,7 @@ function play(e){
     if (index >= 0) {
         var correct = digits[index] == pi[currPlace];
         var currClass;
-        var freq = root * Math.pow(2,pi[currPlace]/12);
+        var freq = root * Math.pow(2, pi[currPlace]/12);
         if (correct) {
             playCorrect(freq);
             currClass = 'correct';
@@ -77,9 +109,10 @@ function play(e){
             htmlEl.classList.add("failed");
         }
 
-        pastEl.insertAdjacentHTML('beforeend', "<table class='"+currClass+" digit"+pi[currPlace]+"'>" +  padHt + "</table>");
-        pastEl.scrollTop=0;
+        pastEl.insertAdjacentHTML('beforeend', "<table class='" + currClass + " digit" + pi[currPlace] + "'>" +  padHt + "</table>");
+        pastEl.scrollTop = 0;
         currPlace++;
+        blankCards = 0;
 
         while (pi[currPlace] === '.' || pi[currPlace] === ' ') {
 
