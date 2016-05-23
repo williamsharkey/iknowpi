@@ -36,14 +36,15 @@ No premium tier
 
 One tier only - free.
 
-(If you want to do these things, that is fine, just fork the project after JULY 4th 2016 and do whatever you like)
+(If you want to do these things, that is fine, just fork the project after July 4th 2016 and do whatever you like)
 
 
 # Private until JULY 4th 2016
 
 Right now this is a private club. Just William, Nooreen and Jay C. and Albert P. have been invited so far.
 
-Once this gets incubated I'll make it public and MIT liscensed. The goal of having it private at first is to avoid distractions from the public while it is young.
+Once this gets incubated we will make it a public github project, and put an MIT liscense on it. The goal of having it private at first is to avoid distractions from the public while it is young.
+
 
 # Why was I invited to this club?
 
@@ -62,24 +63,22 @@ Here is the live [site](http://iknowpi.com/ "I KNOW PI").
 
 
 # Deployment
-Deployment is easy, just use commit your changes to the main branch and it is deployed.
+Deployment is easy, just commit your changes to the main branch. It will be automatically deployed to iknowpi.com.
 
-(DeployBot is set up to automatically deploy to IKNOWPI.com)
+Don't worry about breaking things. We can always roll it back. It is fine if iknowpi.com is broken.
 
-Don't worry about breaking things. We can fix it or roll back. It is ok if you commit code that has bugs in it and it breaks the live site. Right now it is just about fun and building stuff.
+Right now it is just about having fun and building stuff.
 
 Here is the current build status: 
-
 
 [![Deployment status from DeployBot](https://imgegg.deploybot.com/badge/23779030001725/74039.svg)](http://deploybot.com)
 
 
 
 
-
 # (Your Idea here)
 
-If you have an idea, just do it and commit the change.
+If you have an idea, feel free to implement it and commit the change.
 
 If you want to do it later, have someone else do it, discuss it, etc, just create an issue.
 
