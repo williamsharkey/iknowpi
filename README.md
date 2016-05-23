@@ -6,7 +6,7 @@ If you turn your speakers on you will hear a note associated with each digit.
 
 
 
-# Coding style - MINIMAL, literal, simple & stupid
+# Coding style - minimal, literal, simple & stupid
 
 No precompilers like coffeescript, SASS, or typescript.
 
@@ -30,9 +30,11 @@ All client side.
 
 No analytics.
 
-No adds.
+No ads.
 
-No premium - all free.
+No premium tier
+
+One tier only - free.
 
 (If you want to do these things, that is fine, just fork the project after JULY 4th 2016 and do whatever you like)
 
