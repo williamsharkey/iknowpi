@@ -62,9 +62,15 @@ Here is the live [site](http://iknowpi.com/ "I KNOW PI").
 
 
 # Deployment
-Deployment is easy, just use git, commit your change to the main branch, and DeployBot is set up to automatically deplot to IKNOWPI.com
+Deployment is easy, just use commit your changes to the main branch and it is deployed.
 
-Don't worry about breaking things. We can fix it or roll back. It is ok if you commit code that has bugs in it and it breaks the live site. Right now it is just about fun.
+(DeployBot is set up to automatically deploy to IKNOWPI.com)
+
+Don't worry about breaking things. We can fix it or roll back. It is ok if you commit code that has bugs in it and it breaks the live site. Right now it is just about fun and building stuff.
+
+Here is the current build status: 
+
+
 [![Deployment status from DeployBot](https://imgegg.deploybot.com/badge/23779030001725/74039.svg)](http://deploybot.com)
 
 
