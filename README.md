@@ -1,6 +1,6 @@
 # iknowpi
 
-IKNOW PI is a website that is a game and a tool to memorize pi.
+IKNOWPI is a website that is a game and a tool to memorize pi.
 
 If you turn your speakers on you will hear a note associated with each digit.
 
