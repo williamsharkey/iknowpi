@@ -3,124 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>i know pi</title>
-    <style>
-        #main, body, html{
-            height: calc(100% - 5em);
-            margin:0;
-            padding:0;
-        }
-        html {
-            background: papayawhip;
-        }
-        html.mobile {
-            background: greenyellow;
-        }
-        head, title{
-            display: block;
-            text-align: center;
-            font-family: 'Trebuchet Ms', times;
-            font-size: 64pt;
-            color: black;
-            font-variant: small-caps;
-        }
-        html.failed{
-            background: #FF3E69;
-        }
-        html.failed #lost{
-            visibility: visible;
-        }
-        #main {
-            overflow-y: hidden;
-        }
-        #score {
-            border-radius: 50%;
-            background: black;
-            color: white;
-            width: 2em;
-            height: 2em;
-            line-height: 2em;
-            font-family: monospace;
-            font-size: 24pt;
-            position: fixed;
-            left: 0;
-            right: 0;
-            margin: 0 auto;
-            bottom: 10px;
-            text-align: center;
-        }
-        #score:before{
-            content: 'score';
-            position: absolute;
-            right: 120%;
-            color: black;
-            font-size: 14px;
-        }
-        #past{
-            font-size:18pt;
-            font-family: "Futura",sans-serif;
-            width: 28em;
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap-reverse;
-            margin: 0 auto;
-        }
-        #lost {
-            padding-top: 1em;
-            visibility: hidden;
-            font-size: 18pt;
-            font-family: monospace;
-            color: ghostwhite;
-            text-align: center;
-        }
-        table{
-            display: block;
-            border: 1px solid #CECECE;
-            border-radius: 0.3em;
-            overflow: hidden;
-            padding: 5px;
-            margin: .2em;
-            border-collapse: collapse;
-
-        }
-        table.correct{
-            background: #E8FFE8;
-        }
-        table.incorrect{
-            background: lightpink;
-        }
-        td {
-            line-height:0.8em;
-            color:transparent;
-            padding: 2px;
-            border: 1px solid TRANSPARENT;
-        }
-        .correct td{
-            border: 1px solid #D0D0D0;
-        }
-        .incorrect td {
-            border: 1px solid #ECECEC;
-        }
-        .digit0 .num0,
-        .digit1 .num1,
-        .digit2 .num2,
-        .digit3 .num3,
-        .digit4 .num4,
-        .digit5 .num5,
-        .digit6 .num6,
-        .digit7 .num7,
-        .digit8 .num8,
-        .digit9 .num9 {
-            color: black;
-            background: white;
-        }
-    </style>
+    <link rel="stylesheet" href="iknowcss.css">
 </head>
 <body>
-    <div id="main">
-        <div id="past"></div>
-    </div>
-    <div id="score">0</div>
-    <div id="lost">press space to restart</div>
+<main>
+    <past></past>
+</main>
+<score>0</score>
+<lost>press space to restart</lost>
 </body>
-<script type="text/javascript" src="iknowpi.js"></script>
+<script type="text/javascript" src="iknowjs.js"></script>
 </html>
