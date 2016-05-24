@@ -74,6 +74,15 @@ Here is the current build status:
 [![Deployment status from DeployBot](https://imgegg.deploybot.com/badge/23779030001725/74039.svg)](http://deploybot.com)
 
 
+# Mobile Ideas
+
+Web app with native feel, https://developer.chrome.com/multidevice/android/installtohomescreen
+
+Offline mode like http://stories.flipkart.com/introducing-flipkart-lite/
+
+React to WebGL like Flipboard page does, though it's questionable whether this suggestion is in line with project parameters.
+
+
 
 
 # (Your Idea here)
