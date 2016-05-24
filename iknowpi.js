@@ -12,12 +12,8 @@ function q(selector) {
 
 var htmlEl = q('html');
 
-try {
-    var audio = new webkitAudioContext();
-}
-catch(err){
-    var audio = new AudioContext();
-}
+window.AudioContext = window.AudioContext||window.webkitAudioContext;
+var audio = new AudioContext();
 
 function isMobileOrTablet() {
     var agent = (navigator.userAgent||navigator.vendor||window.opera);
@@ -44,13 +40,12 @@ var padHt = '<tr>' +
     '<tr>' +
         '<td colspan="2" class="num0">0</td>' +
     '</tr>';
-var keycodes =  [65,    83,68,70,   71,72,74,       75,76,186];//home row
-var keycodes2 = [48,    49,50,51,   52,53,54,       55,56,57]; //nums
-var keycodes3 = [96,    97,98,99,   100,101,102,    103,104,105]; // numpad
+
+var keycodesNumberRow = [48,  49,50,51,   52, 53,  54,     55, 56, 57];
+var keycodesNumberPad = [96,  97,98,99,   100,101,102,    103,104,105];
 var spaceCode = 32;
 var leftArrowCode = 37;
 var rightArrowCode = 39;
-var keys = "asdfghjkl;";
 var digits = "0123456789";
 
 var root = 200;
@@ -93,18 +88,20 @@ if (e.which == spaceCode) {
     if (e.which == leftArrowCode){
         return removeBlankCardIfExists();
     }
-    var index = keycodes.indexOf(e.which);
-    var index2 = keycodes2.indexOf(e.which);
-    var index3 = keycodes3.indexOf(e.which);
-    if (index2 > index) {
-        index = index2;
+
+    var indexNumberRow = keycodesNumberRow.indexOf(e.which);
+    var indexNumberPad = keycodesNumberPad.indexOf(e.which);
+
+    var numberPressed = -1;
+    if (indexNumberRow > numberPressed) {
+        numberPressed = indexNumberRow;
     }
-    if (index3 > index) {
-        index = index3;
+    if (indexNumberPad > numberPressed) {
+        numberPressed = indexNumberPad;
     }
 
-    if (index >= 0) {
-        var correct = digits[index] == pi[currPlace];
+    if (numberPressed >= 0) {
+        var correct = digits[numberPressed] == pi[currPlace];
         var currClass;
         var freq = root * Math.pow(2, pi[currPlace]/12);
         if (correct) {
@@ -130,10 +127,8 @@ if (e.which == spaceCode) {
 
             currPlace++;
         }
-    } else {
     }
 }
-var correct = 0;
 
 document.onkeydown = play;
 
@@ -146,8 +141,8 @@ function playIncorrect(freq) {
     var decay = 80.0;
     var offset = 40;
 
-    playAt(freq*4, decay,    offset*0.0);
-    playAt(freq*3, decay,    offset*1.0);
+    playAt(freq*4, decay,    0.0);
+    playAt(freq*3, decay,    offset);
     playAt(freq*2, decay,    offset*2.0);
     playAt(freq*1, decay,    offset*3.0);
     playAt(freq*4, decay,    offset*4.0);
