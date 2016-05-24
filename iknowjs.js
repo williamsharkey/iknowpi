@@ -32,28 +32,50 @@ function isMobileOrTablet() {
     );
 }
 
-function buildKey(number) {
-  var key = document.createElement("key");
-  var span = document.createElement("span");
-  span.innerHTML = number;
-  key.appendChild(span);
-  key.addEventListener("click", function(event){
-    play(Number(event.target.innerText));
-  });
-  return key;
+function buildKeyPad(keyPadLayout) {
+    var keypad = q('keypad');
+    function appendKeyRow(rowNums) {
+        var keyRow = document.createElement("keyrow");
+        function appendKey(number) {
+
+            if (number === 'r') {
+                var key = document.createElement("key");
+                key.classList.add('reset');
+                key.innerHTML = 'reset';
+                key.addEventListener("click", reset);
+                keyRow.appendChild(key);
+            } else if (number === 's') {
+                var key = document.createElement("key");
+                key.classList.add('score');
+                key.innerHTML = '0';
+                keyRow.appendChild(key);
+            } else {
+                var key = document.createElement("key");
+                key.innerHTML = number;
+                key.addEventListener("click", function (event) {
+                    play(Number(event.target.innerText));
+                });
+                keyRow.appendChild(key);
+            }
+        }
+        rowNums.forEach(appendKey);
+        keypad.appendChild(keyRow);
+    }
+    keyPadLayout.forEach(appendKeyRow)
 }
+
 
 if (isMobileOrTablet()) {
     q('html').classList.add('mobile');
-    [7,8,9,4,5,6,1,2,3,0].forEach(function(number){
-      q('keypad').appendChild(
-        buildKey(number)
-      );
-    });
+    buildKeyPad([[7,8,9],[4,5,6],[1,2,3],[0,'r','s']]);
+    var scoreEl = q('key.score');
+} else {
+    var scoreEl = q('score');
 }
 
+
 var pastEl = q('past');
-var scoreEl = q('score');
+
 var padHt = '<tr>' +
     '<td class="num7">7</td> <td class="num8">8</td> <td class="num9">9</td>' +
     '</tr>' +
