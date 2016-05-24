@@ -3,6 +3,16 @@
  * Contributions by nooreen on 5/21/2016
  */
 
+/*
+
+  //TODO: here's an interesting bug that show more on mobile than desktop
+  "3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679".split("").forEach(
+    function(number){play(number);
+  });
+  // fix is to only ever push numbers to a queue and constantly process queue
+  // using play function instead of handling numbers synchronously, yeh?
+*/
+
 var pi = "3.1415926535 8979323846 2643383279 5028841971 6939937510 5820974944 5923078164 0628620899 8628034825 3421170679";
 
 // this is a shortcut so people don't have to type document.querySelector ewww
@@ -22,8 +32,24 @@ function isMobileOrTablet() {
     );
 }
 
+function buildKey(number) {
+  var key = document.createElement("key");
+  var span = document.createElement("span");
+  span.innerHTML = number;
+  key.appendChild(span);
+  key.addEventListener("click", function(event){
+    play(Number(event.target.innerText));
+  });
+  return key;
+}
+
 if (isMobileOrTablet()) {
     q('html').classList.add('mobile');
+    [1,2,3,4,5,6,7,8,9,0].forEach(function(number){
+      q('keypad').appendChild(
+        buildKey(number)
+      );
+    });
 }
 
 var pastEl = q('past');
@@ -77,29 +103,31 @@ function removeBlankCardIfExists() {
     }
 }
 
+function playEvent(e) {
+  if (e.which == spaceCode) {
+      return reset();
+  }
+  if (e.which == rightArrowCode) {
+      return insertBlankCard();
+  }
+  if (e.which == leftArrowCode) {
+      return removeBlankCardIfExists();
+  }
 
-function play(e) {
-    if (e.which == spaceCode) {
-        return reset();
-    }
-    if (e.which == rightArrowCode) {
-        return insertBlankCard();
-    }
-    if (e.which == leftArrowCode) {
-        return removeBlankCardIfExists();
-    }
+  var indexNumberRow = keycodesNumberRow.indexOf(e.which);
+  var indexNumberPad = keycodesNumberPad.indexOf(e.which);
 
-    var indexNumberRow = keycodesNumberRow.indexOf(e.which);
-    var indexNumberPad = keycodesNumberPad.indexOf(e.which);
+  var numberPressed = -1;
+  if (indexNumberRow > numberPressed) {
+      numberPressed = indexNumberRow;
+  }
+  if (indexNumberPad > numberPressed) {
+      numberPressed = indexNumberPad;
+  }
+  return play(numberPressed);
+}
 
-    var numberPressed = -1;
-    if (indexNumberRow > numberPressed) {
-        numberPressed = indexNumberRow;
-    }
-    if (indexNumberPad > numberPressed) {
-        numberPressed = indexNumberPad;
-    }
-
+function play(numberPressed) {
     if (numberPressed >= 0) {
         var correct = digits[numberPressed] == pi[currPlace];
         var currClass;
@@ -129,7 +157,7 @@ function play(e) {
     }
 }
 
-document.onkeydown = play;
+document.onkeydown = playEvent;
 
 function playCorrect(freq) {
     var decay = 700;
