@@ -98,8 +98,9 @@ var keycodesNumberPad = [96, 97, 98, 99, 100, 101, 102, 103, 104, 105];
 var spaceCode = 32;
 var leftArrowCode = 37;
 var rightArrowCode = 39;
-var digits = "0123456789";
+var tCode = 84;
 var pCode = 80;
+var digits = "0123456789";
 
 var root = 200;
 var currPlace = 0;
@@ -116,6 +117,15 @@ function reset() {
     blankCards = 0;
     failed = false;
     htmlEl.classList.remove("failed");
+}
+
+function stressTest(n) {
+    var startTime = new Date();
+    pi.substr(0,n).split("").forEach(play);
+    console.log(
+        {
+            stressTestSeconds : ((new Date()) - startTime) / 1000
+        });
 }
 
 function insertBlankCard() {
@@ -141,6 +151,9 @@ function playEvent(e) {
     }
     if (e.which == leftArrowCode) {
         return removeBlankCardIfExists();
+    }
+    if (e.which == tCode) {
+        return stressTest(1001);
     }
     if (e.which == pCode) {
         piano = !piano
@@ -201,7 +214,7 @@ function play(numberPressed) {
 document.onkeydown = playEvent;
 
 function playNormal(freq) {
-    var decay = 700;
+    var decay = 300;
     createOscillator(freq, decay);
 }
 
@@ -227,25 +240,38 @@ function playAt(freq, decay, offset) {
     }
 }
 
-function createOscillator(freq, decay) {
-    var attack = 0;
-    var volume = 0.2;
-    var gain = audio.createGain();
-    var osc = audio.createOscillator();
+var osc;
+var gain;
+function makeOsc(){
+    gain = audio.createGain();
+    osc = audio.createOscillator();
+    osc.type = "square";
     var t = audio.currentTime;
     gain.connect(audio.destination);
     gain.gain.setValueAtTime(0, t);
-    gain.gain.linearRampToValueAtTime(volume, t + attack / 1000);
-    gain.gain.exponentialRampToValueAtTime(volume * 0.01, t + decay / 1000);
-    osc.frequency.value = freq;
-    osc.type = "square";
     osc.connect(gain);
-    osc.start(0);
+    osc.start(t);
+}
+makeOsc();
 
-    setTimeout(audioTimeout, decay);
-    function audioTimeout() {
-        osc.stop(0);
-        osc.disconnect(gain);
-        gain.disconnect(audio.destination);
-    }
+function createOscillator(freq, decay) {
+
+    var volume = 0.2;
+    var t = audio.currentTime;
+
+    osc.frequency.setValueAtTime( freq, t );
+    gain.gain.setValueAtTime(volume, t);
+    //gain.gain.exponentialRampToValueAtTime(volume * 0.01, t + decay / 1000);
+    //gain.gain.linearRampToValueAtTime(0, t + (decay*1.1) / 1000);
+    gain.gain.setValueAtTime(0, t + (decay*1.1) / 1000);
+
+    //osc.stop(0);
+    //osc.start(0);
+
+    //setTimeout(audioTimeout, decay);
+    //function audioTimeout() {
+    //    osc.stop(0);
+    //    osc.disconnect(gain);
+    //    gain.disconnect(audio.destination);
+    //}
 }
