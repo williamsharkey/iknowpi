@@ -14,7 +14,7 @@ Try to keep it simple
 
 # Private until JULY 4th 2016
 
-Right now this is a private club. Just William, Nooreen and Jay C. and Albert P. have been invited so far.
+Right now this is a private club. Just William, Nooreen, Jay C., Albert P. and David D. have been invited so far.
 
 Once this gets incubated we will make it a public github project, and put an MIT liscense on it. The goal of having it private at first is to avoid distractions from the public while it is young.
 
