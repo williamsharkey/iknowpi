@@ -5,13 +5,13 @@
 
 /*
 
-  //TODO: here's an interesting bug that show more on mobile than desktop
-  "3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679".split("").forEach(
-    function(number){play(number);
-  });
-  // fix is to only ever push numbers to a queue and constantly process queue
-  // using play function instead of handling numbers synchronously, yeh?
-*/
+ //TODO: here's an interesting bug that show more on mobile than desktop
+ "3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679".split("").forEach(
+ function(number){play(number);
+ });
+ // fix is to only ever push numbers to a queue and constantly process queue
+ // using play function instead of handling numbers synchronously, yeh?
+ */
 
 var pi = '31415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989';
 
@@ -34,8 +34,10 @@ function isMobileOrTablet() {
 
 function buildKeyPad(keyPadLayout) {
     var keypad = q('keypad');
+
     function appendKeyRow(rowNums) {
         var keyRow = document.createElement("keyrow");
+
         function appendKey(number) {
 
             if (number === 'r') {
@@ -58,16 +60,18 @@ function buildKeyPad(keyPadLayout) {
                 keyRow.appendChild(key);
             }
         }
+
         rowNums.forEach(appendKey);
         keypad.appendChild(keyRow);
     }
+
     keyPadLayout.forEach(appendKeyRow)
 }
 
 
 if (isMobileOrTablet()) {
     q('html').classList.add('mobile');
-    buildKeyPad([[7,8,9],[4,5,6],[1,2,3],[0,'r','s']]);
+    buildKeyPad([[7, 8, 9], [4, 5, 6], [1, 2, 3], [0, 'r', 's']]);
     var scoreEl = q('key.score');
 } else {
     var scoreEl = q('score');
@@ -89,17 +93,19 @@ var padHt = '<tr>' +
     '<td colspan="2" class="num0">0</td>' +
     '</tr>';
 
-var keycodesNumberRow = [48, 49, 50, 51,  52,  53,  54,  55,  56,  57];
+var keycodesNumberRow = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57];
 var keycodesNumberPad = [96, 97, 98, 99, 100, 101, 102, 103, 104, 105];
 var spaceCode = 32;
 var leftArrowCode = 37;
 var rightArrowCode = 39;
 var digits = "0123456789";
+var pCode = 80;
 
 var root = 200;
 var currPlace = 0;
 var score = 0;
 var failed = false;
+var piano = false;
 var blankCards = 0;
 
 function reset() {
@@ -126,58 +132,75 @@ function removeBlankCardIfExists() {
 }
 
 function playEvent(e) {
-  if (e.which == spaceCode) {
-      return reset();
-  }
-  if (e.which == rightArrowCode) {
-      return insertBlankCard();
-  }
-  if (e.which == leftArrowCode) {
-      return removeBlankCardIfExists();
-  }
+    //console.log(e.which);
+    if (e.which == spaceCode) {
+        return reset();
+    }
+    if (e.which == rightArrowCode) {
+        return insertBlankCard();
+    }
+    if (e.which == leftArrowCode) {
+        return removeBlankCardIfExists();
+    }
+    if (e.which == pCode) {
+        piano = !piano
+        if (piano) {
+            htmlEl.classList.add("piano");
+        }
+        else {
+            htmlEl.classList.remove("piano");
+        }
+    }
+    var indexNumberRow = keycodesNumberRow.indexOf(e.which);
+    var indexNumberPad = keycodesNumberPad.indexOf(e.which);
 
-  var indexNumberRow = keycodesNumberRow.indexOf(e.which);
-  var indexNumberPad = keycodesNumberPad.indexOf(e.which);
-
-  var numberPressed = -1;
-  if (indexNumberRow > numberPressed) {
-      numberPressed = indexNumberRow;
-  }
-  if (indexNumberPad > numberPressed) {
-      numberPressed = indexNumberPad;
-  }
-  return play(numberPressed);
+    var numberPressed = -1;
+    if (indexNumberRow > numberPressed) {
+        numberPressed = indexNumberRow;
+    }
+    if (indexNumberPad > numberPressed) {
+        numberPressed = indexNumberPad;
+    }
+    return play(numberPressed);
 }
 
 function play(numberPressed) {
     if (numberPressed >= 0) {
-        var correct = digits[numberPressed] == pi[currPlace];
-        var currClass;
-        var freq = root * Math.pow(2, pi[currPlace] / 12);
-        if (correct) {
-            playCorrect(freq);
-            currClass = 'correct';
-            if (!failed) {
-                score++;
-                scoreEl.innerHTML = score;
-            }
+        var freq;
+        if(piano) {
+            htmlEl.classList.add("digit"+numberPressed);
+            freq = root * Math.pow(2, numberPressed / 12);
+            playNormal(freq);
+            setInterval(function(){htmlEl.classList.remove("digit"+numberPressed);},500)
         } else {
-            playIncorrect(freq);
-            failed = true;
-            currClass = 'incorrect';
-            htmlEl.classList.add("failed");
-        }
+            freq = root * Math.pow(2, pi[currPlace] / 12);
+            var correct = digits[numberPressed] == pi[currPlace];
+            var currClass;
+            if (correct) {
+                playNormal(freq);
+                currClass = 'correct';
+                if (!failed) {
+                    score++;
+                    scoreEl.innerHTML = score;
+                }
+            } else {
+                playIncorrect(freq);
+                failed = true;
+                currClass = 'incorrect';
+                htmlEl.classList.add("failed");
+            }
 
-        pastEl.insertAdjacentHTML('beforeend', "<table class='" + currClass + " digit" + pi[currPlace] + "'>" + padHt + "</table>");
-        pastEl.scrollTop = 0;
-        currPlace++;
-        blankCards = 0;
+            pastEl.insertAdjacentHTML('beforeend', "<table class='" + currClass + " digit" + pi[currPlace] + "'>" + padHt + "</table>");
+            pastEl.scrollTop = 0;
+            currPlace++;
+            blankCards = 0;
+        }
     }
 }
 
 document.onkeydown = playEvent;
 
-function playCorrect(freq) {
+function playNormal(freq) {
     var decay = 700;
     createOscillator(freq, decay);
 }

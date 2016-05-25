@@ -29,6 +29,37 @@ html.failed {
     background: #FF3E69;
 }
 
+html.piano {
+    background: #1464ff;
+}
+
+html.piano table{
+    opacity: .2;
+}
+
+html.piano.digit0 table.digit0,
+html.piano.digit1 table.digit1,
+html.piano.digit2 table.digit2,
+html.piano.digit3 table.digit3,
+html.piano.digit4 table.digit4,
+html.piano.digit5 table.digit5,
+html.piano.digit6 table.digit6,
+html.piano.digit7 table.digit7,
+html.piano.digit8 table.digit8,
+html.piano.digit9 table.digit9 {
+    animation: solidify 0.3s normal forwards ease-in-out;
+}
+
+@keyframes solidify {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: .2;
+    }
+}
+
+
 html.failed lost {
     visibility: visible;
 }
@@ -116,16 +147,16 @@ td {
     border-color: #ECECEC;
 }
 
-.digit0 .num0,
-.digit1 .num1,
-.digit2 .num2,
-.digit3 .num3,
-.digit4 .num4,
-.digit5 .num5,
-.digit6 .num6,
-.digit7 .num7,
-.digit8 .num8,
-.digit9 .num9 {
+table.digit0 .num0,
+table.digit1 .num1,
+table.digit2 .num2,
+table.digit3 .num3,
+table.digit4 .num4,
+table.digit5 .num5,
+table.digit6 .num6,
+table.digit7 .num7,
+table.digit8 .num8,
+table.digit9 .num9 {
     color: black;
     background: white;
 }
