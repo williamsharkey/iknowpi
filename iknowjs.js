@@ -48,7 +48,7 @@ var storyModeUnicorn = {
         var quantities = ['No', "A single", "A pair of", "Three", "A quartet of", "Five", "Six", "Seven", 'Eight', 'Nine', 'Every'];
         var colors = ['black', 'white', 'yellow', 'purple', 'blue', 'orange', 'green', 'pink', 'red', 'brown', 'transparent'];
         var nouns =  ['monk', 'unicorn', 'twin', 'triangle', 'square', 'pentagon', 'hexagon', 'wonders', 'octopus', 'cat', 'void'];
-        var verbs = ['fade', 'backpedal', 'duck', 'dive', 'return', 'stand', 'walk', 'vaporize', 'jump', 'leap', 'disappear'];
+        var verbs = ['fade', 'backpedal', 'duck', 'dive', 'return', 'stand', 'walk', 'vaporize', 'jump', 'leap', 'disappear']; 
         var words = [quantities, colors, nouns, verbs];
         var cardDigits = [];
         return function(currentDigit, cardIndex, el) {
