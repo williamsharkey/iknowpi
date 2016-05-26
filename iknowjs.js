@@ -18,10 +18,10 @@ var pi = '3141592653589793238462643383279502884197169399375105820974944592307816
 
 // this is an example of a pluggable story mode. This is the simplest example. it just adds the current number to el
 var storyModeCount = {
+    name : 'Count',
     pushPiDigit : function() {
-        var name = 'Count';
-        return function(currentDigit, el) {
-            var storyEl = element('<story>' + name + ' ' + currentDigit + '</story>');
+        return function(currentDigit, cardIndex, el) {
+            var storyEl = element('<story>Count ' + currentDigit + '</story>');
             el.appendChild(storyEl);
         };
     }()
@@ -30,10 +30,10 @@ var storyModeCount = {
 
 // here is a slightly less trivial story mode. it associates each digit of pi with a word.
 var storyModeEdwin = {
+    name : 'Edwin',
     pushPiDigit : function() {
-        var name = 'Edwin';
-        var words =  ['zen', 'unicycle', 'eye', 'triangle', 'square', 'pentagon', 'hexagon', 'wonders', 'octopus', 'cat lives'];
-        return function(currentDigit, el) {
+        var words =  ['zen', 'unicycle', 'eye', 'triangle', 'square', 'pentagon', 'hexagon', 'wonders', 'octopus', 'cat lives', 'void'];
+        return function(currentDigit, cardIndex, el) {
             var storyEl = element('<story>' + words[currentDigit] + '</story>');
             el.appendChild(storyEl);
         };
@@ -41,8 +41,44 @@ var storyModeEdwin = {
 };
 
 
-var storyModes = [storyModeEdwin, storyModeCount];
+// here is a story mode that tries to construct sentences
+var storyModeUnicorn = {
+    name : 'Unicorn',
+    pushPiDigit : function() {
+        var quantities = ['No', "A single", "A pair of", "Three", "A quartet of", "Five", "Six", "Seven", 'Eight', 'Nine', 'Every'];
+        var colors = ['black', 'white', 'yellow', 'purple', 'blue', 'orange', 'green', 'pink', 'red', 'brown', 'transparent'];
+        var nouns =  ['monk', 'unicorn', 'twin', 'triangle', 'square', 'pentagon', 'hexagon', 'wonders', 'octopus', 'cat', 'void'];
+        var verbs = ['fade', 'backpedal', 'duck', 'dive', 'return', 'stand', 'walk', 'vaporize', 'jump', 'leap', 'disappear'];
+        var words = [quantities, colors, nouns, verbs];
+        var cardDigits = [];
+        return function(currentDigit, cardIndex, el) {
+            cardDigits[cardIndex] = currentDigit;
+            var wordIndex = [cardIndex%4];
+            var quantity = cardDigits[cardIndex-wordIndex];
+            var word = words[wordIndex][currentDigit];
 
+            if (quantity == 1 || quantity == 10) {
+                if (wordIndex == 3) {
+                    word = word + 's';
+                }
+            } else {
+                if (wordIndex == 2) {
+                    word = word + 's';
+                }
+            }
+
+            if (wordIndex == 3) {
+                word = word + '.';
+            }
+            var storyEl = element('<story>' + word + '</story>');
+            el.appendChild(storyEl);
+        };
+    }()
+};
+
+
+var storyModes = [storyModeCount, storyModeEdwin, storyModeUnicorn];
+var selectedStoryModeIndex = 2;
 
 // this is a shortcut so people don't have to type document.querySelector ewww
 function q(selector) {
@@ -139,6 +175,7 @@ var pCode = 80;
 
 var root = 200;
 var currPlace = 0;
+var cardIndex = 0;
 var score = 0;
 var failed = false;
 var piano = false;
@@ -149,21 +186,30 @@ function reset() {
     scoreEl.innerHTML = score;
     pastEl.innerHTML = '';
     currPlace = 0;
+    cardIndex = 0;
     blankCards = 0;
     failed = false;
     htmlEl.classList.remove("failed");
+    if (piano) {
+        piano = false;
+        htmlEl.classList.remove("piano");
+    }
 }
 
 function insertBlankCard() {
-    blankCards = blankCards + 1;
-    pastEl.insertAdjacentHTML('beforeend', "<table>" + padHt + "</table>");
+    var blankEl = element("<table>" + padHt + "</table>");
+    storyModes[selectedStoryModeIndex].pushPiDigit(10, cardIndex, blankEl);
+    pastEl.appendChild(blankEl);
     pastEl.scrollTop = 0;
+    blankCards = blankCards + 1;
+    cardIndex = cardIndex + 1;
 }
 
 function removeBlankCardIfExists() {
     if (blankCards > 0) {
         q('past').removeChild(q('past table:last-child'));
         blankCards = blankCards - 1;
+        cardIndex = cardIndex - 1;
     }
 }
 
@@ -228,11 +274,12 @@ function play(numberPressed) {
 
 
             var newTableEl = element("<table class='" + currClass + " digit" + pi[currPlace] + "'>" + padHt + "</table>");
-            var selectedStoryMode = storyModes[0];
-            selectedStoryMode.pushPiDigit(pi[currPlace], newTableEl);
+
+            storyModes[selectedStoryModeIndex].pushPiDigit(pi[currPlace], cardIndex, newTableEl);
             pastEl.appendChild(newTableEl);
             pastEl.scrollTop = 0;
             currPlace = currPlace + 1;
+            cardIndex = cardIndex + 1;
             blankCards = 0;
         }
     }
