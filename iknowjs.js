@@ -77,8 +77,53 @@ var storyModeUnicorn = {
 };
 
 
-var storyModes = [storyModeCount, storyModeEdwin, storyModeUnicorn];
-var selectedStoryModeIndex = 2;
+var storyModeVisualSun = {
+    name : 'Visual Sun',
+    pushPiDigit : function() {
+        var quantities = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+        var colors = ['black', 'white', 'yellow', 'purple', 'blue', 'orange', 'green', 'pink', 'red', 'brown', 'gray'];
+        var bgColors = ['white', 'black', 'black', 'black', 'white', 'black', 'black', 'black', 'black', 'white', 'black'];
+        var nouns =  ['monk', '🌝', '🐫', '△', '🐂', '🕸', '🐜', 'wonders', '🐙', '🐈', '●'];
+        var verbs = ['⬐', '⬋', '🏊', '🏄', '⬅', 'stand', '🏃', '⬉', '⬆', '⬈', ''];
+
+        var cardDigits = [];
+        return function(currentDigit, cardIndex, el) {
+            cardDigits[cardIndex] = currentDigit;
+            var wordIndex = [cardIndex%4];
+            var quantity = cardDigits[cardIndex-wordIndex];
+
+            var color = 'gray';
+            var bgColor = 'white';
+            if (wordIndex >= 1) {
+                color = colors[cardDigits[cardIndex-wordIndex+1]];
+                bgColor = bgColors[cardDigits[cardIndex-wordIndex+1]]
+            }
+
+            var noun = "●";
+            if (wordIndex >= 2) {
+                noun = nouns[cardDigits[cardIndex-wordIndex+2]];
+            }
+
+            var verb = "";
+            if (wordIndex >= 3) {
+                verb = verbs[cardDigits[cardIndex-wordIndex+3]];
+            }
+
+            var content = '';
+            for (var i = 0; i < quantity; i++){
+                content += noun;
+            }
+            content += verb;
+
+            var storyEl = element('<story style="color:' + color + '; background:' + bgColor + ';">' + content + '</story>');
+            el.appendChild(storyEl);
+        };
+    }()
+};
+
+
+var storyModes = [storyModeCount, storyModeEdwin, storyModeUnicorn, storyModeVisualSun];
+var selectedStoryModeIndex = 3;
 
 // this is a shortcut so people don't have to type document.querySelector ewww
 function q(selector) {
