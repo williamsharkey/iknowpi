@@ -121,9 +121,15 @@ var storyModeVisualSun = {
     }()
 };
 
+// nothingStoryMode
+var storyModeNothing = {
+    name : 'Nothing',
+    pushPiDigit : function() {return function(currentDigit, cardIndex, el) {}; }()
+};
 
-var storyModes = [storyModeCount, storyModeEdwin, storyModeUnicorn, storyModeVisualSun];
-var selectedStoryModeIndex = 3;
+
+var storyModes = [storyModeCount, storyModeEdwin, storyModeUnicorn, storyModeVisualSun, storyModeNothing];
+var selectedStoryModeIndex = 4;
 
 // this is a shortcut so people don't have to type document.querySelector ewww
 function q(selector) {
