@@ -6,9 +6,33 @@ If you turn your speakers on you will hear a note associated with each digit.
 
 
 
-# Coding style - simple
+# Philosophy - simple
 
-Try to keep it simple
+Coding style - MINIMAL, literal, simple & stupid
+
+No precompilers like coffeescript, SASS, or typescript.
+
+No minification
+
+Nothing too clever
+
+Don't include any dependencies
+
+Try not to use JQUERY. See http://youmightnotneedjquery.com/
+
+Only need to make it work for modern browsers and phones.
+
+No datastore.
+
+No accounts.
+
+No backend.
+
+All client side.
+
+No analytics.
+
+No ads.
 
 # Goal
 Be the easiest way to learn digits of pi.
