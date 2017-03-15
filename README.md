@@ -10,21 +10,6 @@ If you turn your speakers on you will hear a note associated with each digit.
 
 Try to keep it simple
 
-
-
-# Private until JULY 4th 2016
-
-Right now this is a private club. Just William, Nooreen, Jay C., Albert P. and David D. have been invited so far.
-
-Once this gets incubated we will make it a public github project, and put an MIT liscense on it. The goal of having it private at first is to avoid distractions from the public while it is young.
-
-
-# Why was I invited to this club?
-
-Because you are awesome.
-
-
-
 # Goal
 Be the easiest way to learn digits of pi.
 
