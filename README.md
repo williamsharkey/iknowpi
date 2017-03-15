@@ -21,15 +21,7 @@ Here is the live [site](http://iknowpi.com/ "I KNOW PI").
 
 
 # Deployment
-Deployment is easy, just commit your changes to the main branch. It will be automatically deployed to iknowpi.com.
-
-Don't worry about breaking things. We can always roll it back. It is fine if iknowpi.com is broken.
-
-Right now it is just about having fun and building stuff.
-
-Here is the current build status: 
-
-[![Deployment status from DeployBot](https://imgegg.deploybot.com/badge/23779030001725/74039.svg)](http://deploybot.com)
+Right now I copy the files via ftp to IKnowPi.com via ftp. I messed around with services that auto deploy via githooks, but they were not very useful or were expensive. Open to looking into it again.
 
 
 # Mobile Ideas
