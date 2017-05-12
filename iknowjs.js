@@ -237,7 +237,7 @@ var blankCards = 0;
 function reset() {
     score = 0;
     scoreEl.innerHTML = score;
-    pastEl.innerHTML = '';
+    pastEl.innerHTML = '<p>Welcome to IKnowPi. <p>Practice the digits of pi by pressing the numbers 3 1 4 1... on your number pad.<p>Turn on your speakers to listen to notes that correspond to the digit pressed. <p>To allow the sequence to play automatically, press "a"<p>To hear the notes without playing, press "p" for <i>piano mode</i>';
     currPlace = 0;
     cardIndex = 0;
     blankCards = 0;
@@ -295,7 +295,9 @@ function playEvent(e) {
         autoMode = !autoMode
         if (autoMode) {
             htmlEl.classList.add("autoMode");
+            failed = true;
             autoPlay();
+            
             autoPlayTimer= setInterval(autoPlay, 500);
         }
         else {
@@ -406,3 +408,4 @@ function createOscillator(freq, decay) {
         gain.disconnect(audio.destination);
     }
 }
+reset();
