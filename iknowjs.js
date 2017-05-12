@@ -295,7 +295,8 @@ function playEvent(e) {
         autoMode = !autoMode
         if (autoMode) {
             htmlEl.classList.add("autoMode");
-            autoPlayTimer= setInterval(autoPlay, 1000);
+            autoPlay();
+            autoPlayTimer= setInterval(autoPlay, 500);
         }
         else {
             htmlEl.classList.remove("autoMode");
