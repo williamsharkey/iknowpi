@@ -223,6 +223,7 @@ var leftArrowCode = 37;
 var rightArrowCode = 39;
 var digits = "0123456789";
 var pCode = 80;
+var autoCode = 65;
 
 var root = 200;
 var currPlace = 0;
@@ -230,6 +231,7 @@ var cardIndex = 0;
 var score = 0;
 var failed = false;
 var piano = false;
+var autoMode = false;
 var blankCards = 0;
 
 function reset() {
@@ -264,6 +266,11 @@ function removeBlankCardIfExists() {
     }
 }
 
+function autoPlay() {
+    play(pi[currPlace]);
+}
+var autoPlayTimer = null;//setInterval(autoPlay, milliseconds);
+
 function playEvent(e) {
     //console.log(e.which);
     if (e.which == spaceCode) {
@@ -282,6 +289,17 @@ function playEvent(e) {
         }
         else {
             htmlEl.classList.remove("piano");
+        }
+    }
+    if (e.which == autoCode) {
+        autoMode = !autoMode
+        if (autoMode) {
+            htmlEl.classList.add("autoMode");
+            autoPlayTimer= setInterval(autoPlay, 1000);
+        }
+        else {
+            htmlEl.classList.remove("autoMode");
+            clearInterval(autoPlayTimer);
         }
     }
     var indexNumberRow = keycodesNumberRow.indexOf(e.which);
