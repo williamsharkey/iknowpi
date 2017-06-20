@@ -237,7 +237,14 @@ var blankCards = 0;
 function reset() {
     score = 0;
     scoreEl.innerHTML = score;
-    pastEl.innerHTML = '<p>Welcome to IKnowPi. <p>Practice the digits of pi by pressing the numbers 3 1 4 1... on your number pad.<p>Turn on your speakers to listen to notes that correspond to the digit pressed. <p>To allow the sequence to play automatically, press "a"<p>To hear the notes without playing, press "p" for <i>piano mode</i>';
+    pastEl.innerHTML = '<p>If you just want to play tones with your number pad and do not wish to memorize Pi, press "p" for <i>piano mode</i>.'+
+     '<p>If you just want to review the digits without playing, press "a" to hear the notes play automatically. Press "a" again to toggle it off.'+
+     '<p>If you turn your speakers on, you can hear a note associated with each digit. Perhaps the associated \'song\' will aid in your memorization.'+
+     '<p>We will keep score for you. If you make a mistake, press Space to retry.'+
+     '<p>You may practice the digits of pi by pressing the numbers 3 1 4 1... on your number pad.'+
+     '<p>We want to help you memorize digits of Pi'+
+     '<p>Welcome to IKnowPi.'
+     ;
     currPlace = 0;
     cardIndex = 0;
     blankCards = 0;
