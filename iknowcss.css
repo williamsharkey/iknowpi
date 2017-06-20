@@ -12,6 +12,11 @@ html.mobile {
     background: greenyellow;
 }
 
+p {
+    width: 100%;
+    margin: 7px;
+}
+
 .mobile head {
     display: none;
 }
